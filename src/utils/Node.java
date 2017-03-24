@@ -43,6 +43,15 @@ public class Node implements Comparable<Object> {
 		if (root.left == null && root.right == null) {
 			codeMap.put(root.letter, prefix);
 		}
+		
+		for (Character name: codeMap.keySet()){
+
+            String key = name.toString();
+            String value = codeMap.get(name).toString();  
+            System.out.println(key + " " + value);  
+
+
+} 
 
 	}
 
