@@ -14,7 +14,7 @@ public class Counter {
 	Queue<Node> queue = new PriorityQueue<>();
 	Counter leftChild;
 	Counter rightChild;
-	static String s = "";
+	public static String s = "";
 
 	public static void ImportString() {
 

@@ -43,25 +43,37 @@ public class Node implements Comparable<Object> {
 		if (root.left == null && root.right == null) {
 			codeMap.put(root.letter, prefix);
 		}
-		
-		for (Character name: codeMap.keySet()){
 
-            String key = name.toString();
-            String value = codeMap.get(name).toString();  
-            System.out.println(key + " " + value);  
+		for (Character name : codeMap.keySet()) {
 
+			String key = name.toString();
+			String value = codeMap.get(name).toString();
+			System.out.println(key + " " + value);
 
-} 
+		}
 
+	}
+
+	public static String binaryConvert(String str) {
+		String binaryString = "";
+
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+
+				String value = codeMap.get(c);
+				binaryString += value;
+		}
+		System.out.println("Binary: " + binaryString);
+		return binaryString;
 	}
 
 	@Override
 	public int compareTo(Object node2) {
 		return weight - ((Node) node2).weight;
 	}
-	
+
 	public String toString() {
 		return letter.toString();
 	}
-	
+
 }
