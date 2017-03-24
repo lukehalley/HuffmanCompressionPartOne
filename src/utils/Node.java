@@ -1,86 +1,58 @@
 package utils;
 
-public class Node {
+import java.util.HashMap;
 
-	Character c;
+public class Node implements Comparable<Object> {
+
+	Character letter;
 	Integer weight;
 	Node root;
 	Node left;
 	Node right;
+	static HashMap<Character, String> codeMap = new HashMap<Character, String>();
+
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
+	public void setRight(Node right) {
+		this.right = right;
+	}
 
 	public Node(Character c, Integer weight) {
-		this.c = c;
+		this.letter = c;
 		this.weight = weight;
 	}
-	
-	public void addNode(Character c, Integer weight) {
-		
-		// Creates a new node
-		Node newNode = new Node(c, weight); 
 
-		// If there is no root make one
-		if (root == null) { 
+	public static void generateCodes(Node root) {
 
-			root = newNode;
+		generateCodesRec("", root);
 
-		} else {
-			
-			// Set the root
-			Node currentNode = root;
-			
-			// Future parent node
-			Node parent;
-
-			while (true) {
-
-				// The root is the top parent, start there
-				parent = currentNode;
-
-				// Check if the node created should go on the left
-				if (weight < currentNode.c) {
-
-					// Focus on the left child
-					currentNode = currentNode.left;
-
-					// Check if the the left node has no children
-					if (currentNode == null) {
-
-						// Put a node on the left
-						parent.left = newNode;
-						return;
-
-					}
-
-				} else { // If the left node does not run go here
-
-					currentNode = currentNode.right;
-
-					// If right child has no children
-					if (currentNode == null) {
-
-						// Put a new node to the right of it
-						parent.right = newNode;
-						return;
-
-					}
-
-				}
-
-			}
-		}
 	}
 
-	public void postOrderTraverseTree(Node focusNode) {
+	public static void generateCodesRec(String prefix, Node root) {
 
-		if (focusNode != null) {
-
-			postOrderTraverseTree(focusNode.left);
-			postOrderTraverseTree(focusNode.right);
-
-			System.out.println(focusNode);
-
+		if (root.left != null) {
+			generateCodesRec(prefix + "0", root.left);
 		}
 
+		if (root.right != null) {
+			generateCodesRec(prefix + "1", root.right);
+		}
+
+		if (root.left == null && root.right == null) {
+			codeMap.put(root.letter, prefix);
+		}
+
+	}
+
+	@Override
+	public int compareTo(Object node2) {
+		return weight - ((Node) node2).weight;
+	}
+	
+	public String toString() {
+		return letter.toString();
 	}
 	
 }
