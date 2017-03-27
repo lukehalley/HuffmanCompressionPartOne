@@ -16,8 +16,10 @@ public class Main {
 		
 		Node root = c.createNode();
 		Node.generateCodes(root);
-		
 		String s = Node.binaryConvert(Counter.s);
+		Node.binaryExport(s);
+		
+		
 		
 
 	}

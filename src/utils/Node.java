@@ -1,6 +1,10 @@
 package utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Node implements Comparable<Object> {
 
@@ -44,27 +48,38 @@ public class Node implements Comparable<Object> {
 			codeMap.put(root.letter, prefix);
 		}
 
-		for (Character name : codeMap.keySet()) {
-
-			String key = name.toString();
-			String value = codeMap.get(name).toString();
-			System.out.println(key + " " + value);
-
-		}
-
 	}
 
-	public static String binaryConvert(String str) {
+	public static String binaryConvert(String str) throws IOException {
 		String binaryString = "";
 
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 
-				String value = codeMap.get(c);
-				binaryString += value;
+			String value = codeMap.get(c);
+			binaryString += value;
 		}
-		System.out.println("Binary: " + binaryString);
+		
+		binaryExport(binaryString);
 		return binaryString;
+	}
+
+	public static String binaryExport(String binaryString) throws IOException {
+
+		String header = "";
+
+		for (Map.Entry<Character, String> entry : codeMap.entrySet()) {
+			char key = entry.getKey();
+			String value = entry.getValue();
+
+			header += key + ": " + value + "\n";
+		}
+
+		System.out.println(header);
+		System.out.println("Binary: " + binaryString);
+		Files.write(Paths.get("binary.dat"), header.getBytes());
+		return header;
+
 	}
 
 	@Override

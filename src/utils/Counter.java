@@ -79,7 +79,6 @@ public class Counter {
 		}
 
 		Node rootNode = queue.peek();
-		System.out.println("Root Node Is: " + rootNode);
 		return rootNode;
 
 	}
