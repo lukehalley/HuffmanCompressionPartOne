@@ -1,6 +1,10 @@
 package utils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -10,7 +14,6 @@ public class Node implements Comparable<Object> {
 
 	Character letter;
 	Integer weight;
-	Node root;
 	Node left;
 	Node right;
 	static HashMap<Character, String> codeMap = new HashMap<Character, String>();
@@ -59,7 +62,7 @@ public class Node implements Comparable<Object> {
 			String value = codeMap.get(c);
 			binaryString += value;
 		}
-		
+
 		binaryExport(binaryString);
 		return binaryString;
 	}
@@ -67,17 +70,29 @@ public class Node implements Comparable<Object> {
 	public static String binaryExport(String binaryString) throws IOException {
 
 		String header = "";
+		File fileOutput = new File("compressed.txt");
+		FileOutputStream fos = new FileOutputStream(fileOutput);
+
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
 		for (Map.Entry<Character, String> entry : codeMap.entrySet()) {
 			char key = entry.getKey();
 			String value = entry.getValue();
 
 			header += key + ": " + value + "\n";
+
 		}
 
+		bw.write(header);
+		bw.newLine();
+		bw.write(binaryString);
+		System.out.println("File Written");
+		
 		System.out.println(header);
 		System.out.println("Binary: " + binaryString);
-		Files.write(Paths.get("binary.dat"), header.getBytes());
+
+		bw.close();
+
 		return header;
 
 	}
